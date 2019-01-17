@@ -1,0 +1,212 @@
+/* COLOURS */
+
+$colour-cyan: #00FFD3;
+$colour-white: #FFFFFF;
+$colour-black: #000000;
+
+
+
+/* RESETS */
+
+html,
+body,
+*,
+*:before,
+*:after {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-text-size-adjust: 100%;
+	-webkit-font-smoothing: antialiased;
+}
+
+$colourStart: #8D07C8;
+$colourMid: #260F77;
+$colourEnd: #030B3A;
+
+body {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	font-family: "Cairo", sans-serif;
+	font-size: 14px;
+	line-height: 14px;
+	font-weight: 400;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-moz-font-feature-settings: "liga" on;
+	color: #FFFFFF;
+	overflow-x: hidden;
+	background: $colourStart;
+	background: -moz-linear-gradient(-45deg, $colourStart 0%, $colourMid 50%, $colourEnd 100%);
+	background: -webkit-linear-gradient(-45deg, $colourStart 0%, $colourMid 50%, $colourEnd 100%);
+	background: linear-gradient(135deg, $colourStart 0%, $colourMid 50%, $colourEnd 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{$colourStart}', endColorstr='${colourEnd}', GradientType=1);
+}
+
+@mixin animation ($animation) {
+	-webkit-animation: $animation;
+	-moz-animation: $animation;
+	-ms-animation: $animation;
+	-o-animation: $animation;
+	animation: $animation;
+}
+
+@mixin transition ($transition) {
+	-webkit-transition: $transition;
+	-moz-transition: $transition;
+	-ms-transition: $transition;
+	-o-transition: $transition;
+	transition: $transition;
+}
+
+@mixin transform ($transform) {
+	-webkit-transform: $transform;
+	-moz-transform: $transform;
+	-ms-transform: $transform;
+	-o-transform: $transform;
+	transform: $transform;
+}
+
+
+
+/* GLOBE */
+
+.globe {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+}
+
+.globe .globe-list {
+	z-index: 10;
+	position: absolute;
+	left: 0;
+	top: 0;
+	list-style: none;
+}
+
+$dotSize: 16px;
+$dotSizeLarge: $dotSize + ($dotSize / 2);
+
+.globe .globe-list {
+	opacity: 0;
+	@include transition(opacity 3s cubic-bezier(0.175, 0.885, 0.320, 1.275));
+}
+
+.globe .globe-list.active {
+	opacity: 1;
+}
+
+.globe .globe-list > li {
+	opacity: 0.4;
+	position: absolute;
+	margin-left: -($dotSize / 2);
+	margin-top: -($dotSize / 2);
+	width: $dotSize;
+	height: $dotSize;
+	border-radius: 50%;
+	background: $colour-cyan;
+	@include transition(opacity 1s cubic-bezier(0.175, 0.885, 0.320, 1.275));
+}
+
+.globe .globe-list > li.active {
+	opacity: 1;
+	margin-left: -($dotSizeLarge / 2);
+	margin-top: -($dotSizeLarge / 2);
+	width: $dotSizeLarge;
+	height: $dotSizeLarge;
+}
+
+.globe .globe-list > li:before {
+	content: "";
+	opacity: 0.5;
+	pointer-events: none;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -($dotSize / 2);
+	margin-top: -($dotSize / 2);
+	width: $dotSize;
+	height: $dotSize;
+	border-radius: 50%;
+	background: $colour-cyan;
+	@include animation(2s pulse infinite linear);
+}
+
+@-webkit-keyframes pulse {
+	0% { -webkit-transform: scale(1); }
+	50% { opacity: 0.5; }
+	100% { opacity: 0; -webkit-transform: scale(2); }
+}
+
+@-moz-keyframes pulse {
+	0% { -moz-transform: scale(1); }
+	50% { opacity: 0.5; }
+	100% { opacity: 0; -moz-transform: scale(2); }
+}
+
+@-ms-keyframes pulse {
+	0% { -ms-transform: scale(1); }
+	50% { opacity: 0.5; }
+	100% { opacity: 0; -ms-transform: scale(2); }
+}
+
+@-o-keyframes pulse {
+	0% { -o-transform: scale(1); }
+	50% { opacity: 0.5; }
+	100% { opacity: 0; -o-transform: scale(2); }
+}
+
+@keyframes pulse {
+	0% { transform: scale(1); }
+	50% { opacity: 0.5; }
+	100% { opacity: 0; transform: scale(2); }
+}
+
+.globe .globe-list > li.active:before {
+	margin-left: -($dotSizeLarge / 2);
+	margin-top: -($dotSizeLarge / 2);
+	width: $dotSizeLarge;
+	height: $dotSizeLarge;
+}
+
+.globe .globe-list > li.active,
+.globe .globe-list > li.active:before {
+	background: $colour-white;
+}
+
+.globe .globe-list .text {
+	position: absolute;
+	opacity: 0.8;
+	right: $dotSize + 5px;
+	top: 50%;
+	display: block;
+	font-size: 14px;
+	line-height: 14px;
+	font-weight: 600;
+	text-align: right;
+	text-shadow: -1px -1px 0 $colour-black, 1px -1px 0 $colour-black, -1px 1px 0 $colour-black, 1px 1px 0 $colour-black;
+	color: $colour-white;
+	white-space: nowrap;
+	@include transform(translateY(-50%));
+}
+
+.globe .globe-list > li.active .text {
+	opacity: 1;
+	right: $dotSizeLarge + 5px;
+	font-size: 20px;
+	line-height: 20px;
+	font-weight: 700;
+}
+
+.globe .globe-canvas {
+	z-index: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
+}
