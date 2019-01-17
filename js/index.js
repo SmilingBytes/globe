@@ -92,7 +92,7 @@ var isHidden = false;
 function getData() {
 
 	var request = new XMLHttpRequest();
-	request.open('GET', 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/617753/globe-points.json', true);
+	request.open('GET', 'https://beymax.github.io/globe/globe-points.json', true);
 
 	request.onload = function() {
 		if (request.status >= 200 && request.status < 400) {
